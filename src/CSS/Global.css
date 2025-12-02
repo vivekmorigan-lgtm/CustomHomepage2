@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "Digital-7";
+  src: url("../Fonts/ScienceGothic-Bold.ttf") format("truetype");
+}
+:root {
+  --pri: #232946;
+  --pri-trans: #23294650;
+  --sec: #b8c1ec;
+  --sec-trans: #b8c1ec50;
+  --ter: #eebbc3;
+  --light: #fffffe;
+  --light-trans: #fffffe50;
+  --font: "Digital-7";
+  --black: #000000;
+  --black-trans: #00000050;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: var(--pri);
+  color: var(--light);
+  font-family: var(--font);
+}
+a {
+  text-decoration: none;
+}
+::selection {
+  background: var(--ter);
+  color: var(--pri);
+}
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
