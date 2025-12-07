@@ -1,0 +1,49 @@
+.Panel {
+  background: var(--black-trans);
+  border: 1px solid var(--light-trans);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  min-width: 150px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.btn {
+  background-color: var(--pri-trans);
+  border: none;
+  padding: 10px;
+  color: var(--light);
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+}
+i {
+  margin: 5px;
+}
+.LinksCont {
+  border-top: 1px solid var(--light-trans);
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+}
+.links {
+  color: var(--light-trans);
+  text-decoration: none;
+  font-size: 16px;
+  display: inline;
+  transition: color 0.3s;
+}
+.links:hover {
+  color: var(--light);
+}
+.danger {
+  background-color: var(--red);
+}

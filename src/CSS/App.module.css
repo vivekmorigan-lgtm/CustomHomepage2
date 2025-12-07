@@ -19,13 +19,13 @@ body::after {
   filter: blur(8px);
   transform: scale(1.1);
 }
-.down {
+.reloadButton {
   position: fixed;
   bottom: 20px;
-  right: 0;
+  left: 0;
   background: var(--black-trans);
   border: 1px solid var(--light-trans);
-  border-radius: 10px 0 0 10px;
+  border-radius: 0 10px 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +36,7 @@ body::after {
   padding: 12px;
   backdrop-filter: blur(1px);
 }
-.down i {
+.reloadButton i {
   color: var(--light);
   font-size: 18px;
 }

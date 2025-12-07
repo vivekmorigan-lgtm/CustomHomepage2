@@ -7,12 +7,15 @@
   --pri-trans: #23294650;
   --sec: #b8c1ec;
   --sec-trans: #b8c1ec50;
-  --ter: #eebbc3;
   --light: #fffffe;
   --light-trans: #fffffe50;
+  --muted: #777;
   --font: "Digital-7";
   --black: #000000;
   --black-trans: #00000050;
+  --red: #ff4c60;
+  --red-dull: #ff4c6050;
+  --light-dull: #fffffe30;
 }
 * {
   margin: 0;
@@ -26,10 +29,6 @@ body {
 }
 a {
   text-decoration: none;
-}
-::selection {
-  background: var(--ter);
-  color: var(--pri);
 }
 body,
 html {

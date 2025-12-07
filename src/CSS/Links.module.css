@@ -1,87 +1,74 @@
-.ToggleBtn {
+/* Particle background styles */
+.ParticleBg {
   position: fixed;
-  top: 24px;
-  right: 0;
-  width: 48px;
-  height: 48px;
-  background: var(--black-trans);
-  border: 1px solid var(--light-trans);
-  border-radius: 12px 0 0 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1001;
-  backdrop-filter: blur(2px);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-.ToggleBtn:hover {
-  transform: scale(1.05);
+.Particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: floatParticle linear infinite;
 }
 
-.ToggleBtn:active {
-  transform: scale(0.95);
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
 }
-
-.ToggleBtn::before {
-  content: "☰";
-  color: white;
-  font-size: 24px;
-  font-weight: 300;
-}
-
-.ToggleBtn.Active::before {
-  content: "✕";
-  font-size: 20px;
-}
-
 .Container {
   position: fixed;
-  top: 90px;
+  top: 20px;
   right: 0;
   background: var(--black-trans);
   backdrop-filter: blur(5px);
   border: 1px solid var(--light-trans);
-  border-radius: 30px 0 0 30px;
+  border-radius: 15px 0 0 15px;
   padding: 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
   gap: 16px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px) scale(0.95);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-}
-
-.Container.Active {
-  opacity: 1;
-  visibility: visible;
+  z-index: 100;
   transform: translateY(0) scale(1);
 }
 
-.LinkItem {
-  width: 52px;
-  height: 52px;
+.LinkItem,
+.AddLink {
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--pri-trans);
   border: 1px solid var(--light-trans);
   border-radius: 12px;
-  color: #e0e0e0;
-  font-size: 22px;
+  color: var(--muted);
+  font-size: 18px;
   text-decoration: none;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
 
-.LinkItem::before {
+.LinkItem::before,
+.AddLink::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -94,12 +81,14 @@
   border-radius: 50%;
 }
 
-.LinkItem:hover::before {
+.LinkItem:hover::before,
+.AddLink:hover::before {
   width: 100px;
   height: 100px;
 }
 
-.LinkItem:hover {
+.LinkItem:hover,
+.AddLink:hover {
   background: var(--sec);
   border-color: var(--light);
   color: var(--light);
@@ -107,11 +96,119 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.LinkItem:active {
+.LinkItem:active,
+.AddLink:active {
   transform: translateY(-1px);
 }
+.LinkItem:focus,
+.AddLink:focus {
+  color: var(--light);
+}
 
-.LinkItem i {
+.LinkItem i,
+.AddLink i {
   position: relative;
   z-index: 1;
+}
+.RemoveLink {
+  height: 15px;
+  width: 15px;
+  position: relative;
+  top: -3rem;
+  right: -2rem;
+  background: var(--red-dull);
+  border-radius: 5px;
+  border: 1px solid var(--light-dull);
+  color: var(--light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  visibility: hidden;
+  pointer-events: none;
+}
+.RemoveLink:hover {
+  background: var(--red);
+  border-color: var(--light);
+  color: var(--light);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+.RemoveLink i {
+  font-size: 10px;
+}
+.ModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.Modal {
+  background: var(--black);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--light-trans);
+  width: 300px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.Modal h2 {
+  margin: 0;
+  color: var(--light);
+}
+.Modal label {
+  align-self: flex-start;
+  color: var(--light);
+  font-size: 14px;
+}
+.Modal input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--light-dull);
+  border-radius: 5px;
+  background: var(--pri-trans);
+  color: var(--light);
+  margin: 10px 0;
+}
+.ModalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.ModalActions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.ModalActions .ModalCancelBtn {
+  background: var(--red-dull);
+  color: var(--light);
+}
+
+.ModalActions .ModalCancelBtn:hover {
+  background: var(--red);
+}
+
+.ModalActions .PopAddLink {
+  background: var(--sec-trans);
+  color: var(--light);
+}
+
+.ModalActions .PopAddLink:hover {
+  background: var(--sec);
+  color: var(--black);
 }
