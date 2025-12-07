@@ -97,9 +97,6 @@ function Links() {
 
       {showModal && (
         <div className={styles.ModalOverlay}>
-
-
-
           <div className={styles.Modal}>
             <h3>Add New Link</h3>
             <form onSubmit={addLink}>
@@ -140,6 +137,15 @@ function Links() {
                   onClick={() => setShowModal(false)}
                 >
                   Cancel
+                </button>
+                <button
+                  type="button"
+                  className={styles.ModalInfoBtn}
+                  onClick={() =>
+                    window.open("https://icons.getbootstrap.com/", "_blank")
+                  }
+                >
+                  Go to bootstrap icons
                 </button>
               </div>
             </form>

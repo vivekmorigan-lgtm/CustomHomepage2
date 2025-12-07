@@ -212,3 +212,17 @@
   background: var(--sec);
   color: var(--black);
 }
+.ModalInfoBtn {
+  background: #9b9908;
+  color: var(--light);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.ModalInfoBtn:hover {
+  background: #fffb00;
+  color: var(--black);
+}
