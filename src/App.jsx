@@ -6,6 +6,7 @@ import Links from "./Links.jsx";
 import Notes from "./Notes.jsx";
 import Panel from "./Panel.jsx";
 import Particles from "./Particles.jsx";
+import Timer from "./Timer.jsx";
 
 const url = `https://picsum.photos/1920/1080?random=${Math.random()}`;
 
@@ -27,6 +28,7 @@ function App() {
       <Clock />
       <Links />
       <Notes />
+      <Timer />
     </Panel>
   );
 }
