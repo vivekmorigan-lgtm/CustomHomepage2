@@ -258,7 +258,8 @@
 }
 
 .openTimerBtn:hover {
-  transform: translateX(-3px);
+  background: var(--light-trans);
+  border-color: var(--light);
 }
 
 .openTimerBtn i {

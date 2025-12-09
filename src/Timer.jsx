@@ -9,34 +9,55 @@ export default function Timer() {
   const [startTime, setStartTime] = useState(null);
   const [breaks, setBreaks] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const intervalRef = useRef(null);
+  const workIntervalRef = useRef(null);
   const breakIntervalRef = useRef(null);
+  const workStartTimestamp = useRef(null);
+  const breakStartTimestamp = useRef(null);
+  const accumulatedWorkTime = useRef(0);
+  const accumulatedBreakTime = useRef(0);
 
   useEffect(() => {
     if (isRunning && !isOnBreak) {
-      intervalRef.current = setInterval(() => {
-        setTime((prev) => prev + 10);
+      if (!workStartTimestamp.current) {
+        workStartTimestamp.current = Date.now();
+      }
+      workIntervalRef.current = setInterval(() => {
+        const elapsed = Date.now() - workStartTimestamp.current;
+        setTime(accumulatedWorkTime.current + elapsed);
       }, 10);
     } else {
-      clearInterval(intervalRef.current);
+      if (workStartTimestamp.current) {
+        const elapsed = Date.now() - workStartTimestamp.current;
+        accumulatedWorkTime.current += elapsed;
+        workStartTimestamp.current = null;
+      }
+      clearInterval(workIntervalRef.current);
     }
 
-    return () => clearInterval(intervalRef.current);
+    return () => clearInterval(workIntervalRef.current);
   }, [isRunning, isOnBreak]);
 
   useEffect(() => {
     if (isOnBreak) {
+      if (!breakStartTimestamp.current) {
+        breakStartTimestamp.current = Date.now();
+      }
       breakIntervalRef.current = setInterval(() => {
-        setBreakTime((prev) => {
-          const newBreakTime = prev + 10;
-          if (newBreakTime >= time) {
-            handlePause();
-            return time;
-          }
-          return newBreakTime;
-        });
+        const elapsed = Date.now() - breakStartTimestamp.current;
+        const newBreakTime = accumulatedBreakTime.current + elapsed;
+        if (newBreakTime >= time) {
+          handlePause();
+          setBreakTime(time);
+        } else {
+          setBreakTime(newBreakTime);
+        }
       }, 10);
     } else {
+      if (breakStartTimestamp.current) {
+        const elapsed = Date.now() - breakStartTimestamp.current;
+        accumulatedBreakTime.current += elapsed;
+        breakStartTimestamp.current = null;
+      }
       clearInterval(breakIntervalRef.current);
     }
 
@@ -63,7 +84,11 @@ export default function Timer() {
     setBreakTime(0);
     setStartTime(null);
     setBreaks([]);
-    clearInterval(intervalRef.current);
+    workStartTimestamp.current = null;
+    breakStartTimestamp.current = null;
+    accumulatedWorkTime.current = 0;
+    accumulatedBreakTime.current = 0;
+    clearInterval(workIntervalRef.current);
     clearInterval(breakIntervalRef.current);
   };
 
@@ -107,9 +132,7 @@ export default function Timer() {
 
     return `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}.${ms
-      .toString()
-      .padStart(2, "0")}`;
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
   const stopwatchContent = (
