@@ -32,7 +32,8 @@ function Links() {
   });
 
   const [showModal, setShowModal] = useState(false);
-  const [newLink, setNewLink] = useState({ href: "", icon: "", label: "" });
+  const [newLink, setNewLink] = useState({ href: "", label: "" });
+  const [popup, setPopup] = useState({ visible: false, text: "", x: 0, y: 0 });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,9 +46,22 @@ function Links() {
 
   const addLink = (e) => {
     e.preventDefault();
-    if (newLink.href && newLink.icon && newLink.label) {
-      setLinks([...links, newLink]);
-      setNewLink({ href: "", icon: "", label: "" });
+    if (newLink.href && newLink.label) {
+      const getLogoChar = (href) => {
+        try {
+          const cleaned = href
+            .replace(/^https?:\/\//, "")
+            .replace(/^www\./, "");
+          return cleaned.charAt(0).toUpperCase() || "?";
+        } catch (err) {
+          return "?";
+        }
+      };
+
+      const logo = getLogoChar(newLink.href);
+      const linkToAdd = { ...newLink, icon: logo };
+      setLinks([...links, linkToAdd]);
+      setNewLink({ href: "", label: "" });
       setShowModal(false);
     }
   };
@@ -60,15 +74,32 @@ function Links() {
     <>
       <div className={styles.Container}>
         {links.map((link, index) => (
-          <div key={index} className={styles.LinkItemWrapper}>
+          <div
+            key={index}
+            className={styles.LinkItemWrapper}
+            onMouseEnter={() =>
+              setPopup({ visible: true, text: link.label, x: 0, y: 0 })
+            }
+            onMouseMove={(e) =>
+              setPopup((p) => ({
+                ...p,
+                x: e.clientX + 40,
+                y: e.clientY + 40,
+              }))
+            }
+            onMouseLeave={() => setPopup((p) => ({ ...p, visible: false }))}
+          >
             <a
               href={link.href}
-              target="_blank"
               rel="noopener noreferrer"
               className={styles.LinkItem}
               aria-label={link.label}
             >
-              <i className={`bi ${link.icon}`}></i>
+              {typeof link.icon === "string" && link.icon.startsWith("bi-") ? (
+                <i className={`bi ${link.icon}`}></i>
+              ) : (
+                <div className={styles.CharLogo}>{link.icon}</div>
+              )}
             </a>
             <button
               className={styles.RemoveLink}
@@ -95,6 +126,17 @@ function Links() {
         </button>
       </div>
 
+      <div
+        className={styles.HoverPopup}
+        style={{
+          left: popup.x,
+          top: popup.y,
+          opacity: popup.visible ? 1 : 0,
+        }}
+      >
+        {popup.text}
+      </div>
+
       {showModal && (
         <div className={styles.ModalOverlay}>
           <div className={styles.Modal}>
@@ -105,15 +147,6 @@ function Links() {
                 name="href"
                 placeholder="Link URL"
                 value={newLink.href}
-                onChange={handleInputChange}
-                required
-                className={styles.ModalInput}
-              />
-              <input
-                type="text"
-                name="icon"
-                placeholder="Bootstrap Icon (e.g. bi-github)"
-                value={newLink.icon}
                 onChange={handleInputChange}
                 required
                 className={styles.ModalInput}
@@ -137,15 +170,6 @@ function Links() {
                   onClick={() => setShowModal(false)}
                 >
                   Cancel
-                </button>
-                <button
-                  type="button"
-                  className={styles.ModalInfoBtn}
-                  onClick={() =>
-                    window.open("https://icons.getbootstrap.com/", "_blank")
-                  }
-                >
-                  Go to bootstrap icons
                 </button>
               </div>
             </form>

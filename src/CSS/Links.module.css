@@ -1,4 +1,3 @@
-/* Particle background styles */
 .ParticleBg {
   position: fixed;
   top: 0;
@@ -59,7 +58,7 @@
   background: var(--pri-trans);
   border: 1px solid var(--light-trans);
   border-radius: 12px;
-  color: var(--muted);
+  color: var(--light);
   font-size: 18px;
   text-decoration: none;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -67,32 +66,11 @@
   overflow: hidden;
 }
 
-.LinkItem::before,
-.AddLink::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
+.LinkItem:hover {
   background: var(--pri);
-  transform: translate(-50%, -50%);
-  transition: width 0.4s, height 0.4s;
-  border-radius: 50%;
-}
-
-.LinkItem:hover::before,
-.AddLink:hover::before {
-  width: 100px;
-  height: 100px;
-}
-
-.LinkItem:hover,
-.AddLink:hover {
-  background: var(--sec);
   border-color: var(--light);
-  color: var(--light);
-  transform: translateY(-3px);
+  color: var(--light-trans);
+  transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -225,4 +203,34 @@
 .ModalInfoBtn:hover {
   background: #fffb00;
   color: var(--black);
+}
+
+.LinkItemWrapper {
+  position: relative;
+  align-items: center;
+}
+
+.CharLogo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--light);
+}
+
+.HoverPopup {
+  position: fixed;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.85);
+  color: var(--light);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: opacity 0.12s ease;
+  z-index: 9999;
+  transform: translate(-50%, -120%);
+  opacity: 0;
 }
